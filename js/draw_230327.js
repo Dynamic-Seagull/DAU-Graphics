@@ -4,12 +4,31 @@ let xValue = 50;
 let yValue = 200;
 
 let boxPts = [];
+let colors = [];
 
 boxPts.push(new THREE.Vector2(150, 150));
 boxPts.push(new THREE.Vector2(350, 350));
+colors.push("green");
 
 boxPts.push(new THREE.Vector2(xValue, yValue));
 boxPts.push(new THREE.Vector2(xValue + 50, yValue + 50));
+colors.push("red");
+
+boxPts.push(new THREE.Vector2(40, 40));//blue
+boxPts.push(new THREE.Vector2(140, 140));
+colors.push("blue");
+
+boxPts.push(new THREE.Vector2(250, 100));//yellow
+boxPts.push(new THREE.Vector2(450, 250));
+colors.push("yellow");
+
+boxPts.push(new THREE.Vector2(200, 200));//cyan
+boxPts.push(new THREE.Vector2(300, 300));
+colors.push("cyan");
+
+boxPts.push(new THREE.Vector2(50, 320));//purple
+boxPts.push(new THREE.Vector2(250, 450));
+colors.push("purple");
 
 function draw_box(minPt, maxPt, isFill) {
   ctx.beginPath();
@@ -20,28 +39,30 @@ function draw_box(minPt, maxPt, isFill) {
     ctx.stroke();
 }
 
-function draw_image() {
+function isCollision(boxMin, boxMax, colorIndex) {//박스 충돌 개별감지
   let isFill = false;
-  if (box_box_collision(boxPts[0], boxPts[1], boxPts[2], boxPts[3]))
+  if (box_box_collision(boxMin, boxMax, boxPts[2], boxPts[3]))
     isFill = true;
-  ctx.strokeStyle = "green";
-  ctx.fillStyle = "green"
-  draw_box(boxPts[0], boxPts[1], isFill)
+  ctx.strokeStyle = colorIndex
+  ctx.fillStyle = colorIndex
+  draw_box(boxMin, boxMax, isFill)
   ctx.strokeStyle = "red"
   ctx.fillStyle = "red"
   draw_box(boxPts[2], boxPts[3], isFill)
 }
 
-function box_box_collision(pMin, pMax, qMin, qMax) {
-  let pw = pMax.x - pMin.x;
-  let qw = qMax.x - qMin.x;
-  let ph = pMax.y - pMin.y;
-  let qh = qMax.y - qMin.y;
-  //Need to write...
-  if (false)
-    return true;
-  return false
+function draw_image() {//그림 출력
+  isCollision(boxPts[0], boxPts[1], colors[0]);//green
+  isCollision(boxPts[4], boxPts[5], colors[2]);//blue
+  isCollision(boxPts[6], boxPts[7], colors[3]);//yellow
+  isCollision(boxPts[8], boxPts[9], colors[4]);//cyan
+  isCollision(boxPts[10], boxPts[11], colors[5]);//purple
 }
+
+function box_box_collision(pMin, pMax, qMin, qMax) {
+  if(pMax.x>qMin.x && pMin.x<qMax.x && pMax.y>qMin.y && pMin.y<qMax.y ) return true;
+}
+
 
 //Keyboard Input
 function keyDown(e) {
