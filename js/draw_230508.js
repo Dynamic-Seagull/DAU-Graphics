@@ -36,7 +36,7 @@ function initGeometry() {
             material0.color.setHex(Math.random()*0xffffff);
             if(i%2==0)
             {
-                material0.wireframe = TRUE;
+                material0.wireframe = true;
             }
             //Translation
             cube.translateX(-9.0 + 2.0 * i);//큐브 위치 조정
